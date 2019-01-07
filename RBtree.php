@@ -1,17 +1,18 @@
 <?php
-
-class AVLTree {
+class RBtree {
 
     public $left;
     public $right;
     public $data;
+    public $color;
     public $depth;  //глубина
 
-    public function AVLTree()
+    public function RBtree()
     {
         $this->left = null;
         $this->right = null;
         $this->data = null;
+        $this->color = "black";
         $this->depth = 0;
     }
 
@@ -83,6 +84,22 @@ class AVLTree {
             $this->depth = $this->left->depth+1;
         if( $this->right !== NULL && $this->depth <= $this->right->depth )
             $this->depth = $this->right->depth+1;
+
+        if($this->left->left !== null || $this->left->right !== null) {
+            if($this->color !== "red") {
+                $this->left->color = "red";
+            } else {
+                $this->left->color = "black";
+            }
+        }
+
+        if($this->right->left !== null || $this->right->right !== null) {
+            if($this->color !== "red") {
+                $this->right->color = "red";
+            } else {
+                $this->right->color = "black";
+            }
+        }
     }
 
     public function toString()
@@ -113,7 +130,7 @@ class AVLTree {
         {
             if( $depth == 0 ) {
                 $s = "<td align=center colspan=".$this->getNLeafs().">";
-                $s .= $this->data."[".$this->depth."]</td>\n";
+                $s .= $this->data . "$this->color" ."[".$this->depth."]</td>\n";
             } else {
                 if( $this->left !== NULL ) {
                     $s = $this->left->toTD( $depth-1);
@@ -136,16 +153,16 @@ class AVLTree {
 
     public function getNLeafs()
     {
-        if( $this->left !== NULL ) {
+        if ($this->left !== NULL) {
             $nleafs = $this->left->getNLeafs();
 
-            if( $this->right !== NULL )
+            if ($this->right !== NULL)
                 $nleafs += $this->right->getNLeafs();
             else
                 ++$nleafs;
         } else {
-            if( $this->right !== NULL )
-                $nleafs = $this->right->getNLeafs()+1;
+            if ($this->right !== NULL)
+                $nleafs = $this->right->getNLeafs() + 1;
             else
                 $nleafs = 1;
         }
