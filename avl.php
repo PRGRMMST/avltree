@@ -109,25 +109,29 @@ class AVLTree {
 
     public function toTD($depth)
     {
-        if( $depth == 0 ) {
-            $s = "<td align=center colspan=".$this->getNLeafs().">";
-            $s .= $this->data."[".$this->depth."]</td>\n";
-        } else {
-            if( $this->left !== NULL ) {
-                $s = $this->left->toTD( $depth-1);
+        if($this->depth !== null and $this->depth !== 0)
+        {
+            if( $depth == 0 ) {
+                $s = "<td align=center colspan=".$this->getNLeafs().">";
+                $s .= $this->data."[".$this->depth."]</td>\n";
             } else {
-                $s="<td></td>";
+                if( $this->left !== NULL ) {
+                    $s = $this->left->toTD( $depth-1);
+                } else {
+                    $s="<td></td>";
+                }
+
+                if( $this->right !== NULL ) {
+                    $s .= $this->right->toTD( $depth-1);
+                } else {
+                    if( $this->left !== NULL )
+                        $s.="<td></td>";
+                }
             }
 
-            if( $this->right !== NULL ) {
-                $s .= $this->right->toTD( $depth-1);
-            } else {
-                if( $this->left !== NULL )
-                    $s.="<td></td>";
-            }
+            return $s;
         }
 
-        return $s;
     }
 
     public function getNLeafs()
