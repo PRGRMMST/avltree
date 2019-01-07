@@ -120,8 +120,8 @@ $n->add( 12);
 echo $n->toString();
 $n->add( 17);
 echo $n->toString();
-$n->delete( 15);
+$n->add( 16);
 echo $n->toString();
-$n->delete( 4);
+$n->add( 19);
 echo $n->toString();
 ?>

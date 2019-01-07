@@ -85,21 +85,11 @@ class RBtree {
         if( $this->right !== NULL && $this->depth <= $this->right->depth )
             $this->depth = $this->right->depth+1;
 
-        if($this->left->left !== null || $this->left->right !== null) {
-            if($this->color !== "red") {
-                $this->left->color = "red";
-            } else {
-                $this->left->color = "black";
-            }
-        }
+        if(isset($this->left->left) && isset($this->left->right))
+            $this->left->color = $this->color == "red" ? "black" : "red";
 
-        if($this->right->left !== null || $this->right->right !== null) {
-            if($this->color !== "red") {
-                $this->right->color = "red";
-            } else {
-                $this->right->color = "black";
-            }
-        }
+        if(isset($this->right->left) && isset($this->right->right))
+            $this->right->color = $this->color == "red" ? "black" : "red";
     }
 
     public function toString()
